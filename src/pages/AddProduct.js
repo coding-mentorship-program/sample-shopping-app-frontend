@@ -7,7 +7,7 @@ const AddProduct = () => {
     event.preventDefault() // this stops form from refreshing page
     // const newProduct = { name: 'Pasta', descripion: 'Italian Noodles', price: 12.99, exp: 2023 }
 
-    fetch('http://localhost:4040', {
+    fetch(process.env.REACT_APP_API_ENDPOINT, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

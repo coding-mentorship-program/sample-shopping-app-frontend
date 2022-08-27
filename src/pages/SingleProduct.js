@@ -12,7 +12,7 @@ const SingleProduct = () => {
     event.preventDefault()
     console.log('Sending to API for delete')
 
-    fetch(`http://localhost:4040?name=${name}`, {
+    fetch(`${process.env.REACT_APP_API_ENDPOINT}?name=${name}`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
@@ -27,7 +27,7 @@ const SingleProduct = () => {
     event.preventDefault()
     console.log('Sending to API to update product')
 
-    fetch(`http://localhost:4040?name=${name}`, {
+    fetch(`${process.env.REACT_APP_API_ENDPOINT}?name=${name}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
