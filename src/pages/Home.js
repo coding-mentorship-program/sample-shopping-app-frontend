@@ -17,7 +17,7 @@ const Home = () => {
 
   return (
     <div className='container'>
-      <h1>Home component</h1>
+      <h1>All Products</h1>
       <div className='products'>{allProducts}</div>
     </div>
   )
