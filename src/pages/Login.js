@@ -3,11 +3,12 @@ import { useNavigate } from 'react-router-dom'
 
 export default function Login() {
 	const [form, setForm] = useState()
+	const [message, setMessage] = useState()
+
 	const navigate = useNavigate()
 
 	const handleLogin = event => {
 		event.preventDefault()
-		console.log('Sending to API to update product')
 
 		fetch(`${process.env.REACT_APP_API_ENDPOINT}/login`, {
 			method: 'POST',
@@ -18,8 +19,14 @@ export default function Login() {
 		})
 			.then(res => res.json())
 			.then(data => {
-				localStorage.setItem('blogUser', JSON.stringify(data))
-        navigate('/')
+				if (data.email) {
+					localStorage.setItem('blogUser', JSON.stringify(data))
+					setMessage('User Logging in ')
+					navigate('/')
+				} else {
+					console.log(data.error)
+					setMessage(data.error)
+				}
 			})
 
 			.catch(err => console.error(err))
@@ -34,11 +41,13 @@ export default function Login() {
 			<h3> This is login</h3>
 			<form className='add-form'>
 				<label htmlFor=''>Email </label>
-				<input onChange={e => handleForm(e)} type='email' placeholder='email' name='email' id='email' />
+				
+				<input onChange={e => handleForm(e)} type='email' placeholder='email' name='email' id='email' required />
 
 				<label htmlFor=''> Password </label>
-				<input onChange={e => handleForm(e)} type='password' placeholder='ex. 1234556' name='password' id='password' />
+				<input onChange={handleForm} type='password' placeholder='ex. 1234556' name='password' id='password' />
 				<button onClick={handleLogin}>Login</button>
+				<p>{message}</p>
 			</form>
 		</>
 	)

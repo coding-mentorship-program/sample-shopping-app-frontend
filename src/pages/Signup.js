@@ -34,7 +34,7 @@ export default function Signup() {
 
 				<label> Password </label>
 				<input onChange={e => handleForm(e)} type='password' placeholder='ex. 1234556' name='password' id='password' />
-				<button onClick={handleUpdate}>Login</button>
+				<button onClick={handleUpdate}>Signup</button>
 			</form>
 		</>
 	)
