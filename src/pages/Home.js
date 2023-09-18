@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { ProductCard } from '../components/ProductCard'
+import ParentComponent from '../components/ParentComponent'
 
 const Home = () => {
 	const [products, setProducts] = useState([])
@@ -19,6 +20,7 @@ const Home = () => {
 		<div className='container'>
 			<h1>All Products</h1>
 			<div className='products'>{allProducts}</div>
+			<ParentComponent /> 
 		</div>
 	)
 }
