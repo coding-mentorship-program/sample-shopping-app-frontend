@@ -1,3 +1,5 @@
+import { createContext } from 'react'
+
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 
 import './assets/styles.css'
@@ -11,29 +13,30 @@ import AddProduct from './pages/AddProduct'
 import Login from './pages/Login'
 import Signup from './pages/Signup'
 
+export const UserContext = createContext()
+
 function App() {
-	const [loggeddIn, setLoggeddin] = useState()
+	const [user, setUser] = useState()
 
 	useEffect(() => {
-		const userInLS = localStorage.getItem('blogUser')
-
-		if (userInLS) {
-			setLoggeddin(true)
-		}
+		const userInLS = JSON.parse(localStorage.getItem('blogUser'))
+		if (userInLS) setUser(userInLS)
 	}, [])
 
 	return (
 		<BrowserRouter>
-			<Header />
-			<Routes>
-				<Route path='/' element={<Home />} />
-				<Route path='/single-product/:id' element={<SingleProduct />} />
-				{loggeddIn && <Route path='/add-product' element={<AddProduct />} />}
-				<Route path='/login' element={<Login />} />
-				<Route path='/signup' element={<Signup />} />
-				<Route path='*' element={<h2>Page not found</h2>} />
-			</Routes>
-			<Footer />
+			<UserContext.Provider value={{ user, setUser }}>
+				<Header />
+				<Routes>
+					<Route path='/' element={<Home />} />
+					<Route path='/single-product/:id' element={<SingleProduct />} />
+					{user && <Route path='/add-product' element={<AddProduct />} />}
+					{!user && <Route path='/login' element={<Login />} />}
+					{!user && <Route path='/signup' element={<Signup />} />}
+					<Route path='*' element={<h2>Page not found</h2>} />
+				</Routes>
+				<Footer />
+			</UserContext.Provider>
 		</BrowserRouter>
 	)
 }

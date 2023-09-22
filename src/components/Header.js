@@ -1,15 +1,9 @@
-import { useEffect, useState } from 'react'
+import { useContext } from 'react'
+
+import { UserContext } from '../App'
 
 const Header = () => {
-	const [loggeddIn, setLoggeddin] = useState(false)
-
-	useEffect(() => {
-		const userInLS = localStorage.getItem('blogUser')
-
-		if (userInLS) {
-			setLoggeddin(true)
-		}
-	}, [])
+	const { user } = useContext(UserContext)
 
 	return (
 		<ul>
@@ -17,13 +11,13 @@ const Header = () => {
 				<a href='/'>Home</a>
 			</li>
 			{/* this will only show if loggeddin is true */}
-			{loggeddIn && (
+			{user && (
 				<li>
 					<a href='/add-product'>Add Product</a>
 				</li>
 			)}
 
-			{!loggeddIn && (
+			{!user && (
 				<>
 					<li>
 						<a href='/login'>Login</a>
@@ -34,10 +28,10 @@ const Header = () => {
 				</>
 			)}
 
-			{loggeddIn && (
+			{user && (
 				<li>
 					<a href='/' onClick={() => localStorage.clear()}>
-						Logout
+						Logout {user.email}
 					</a>
 				</li>
 			)}
